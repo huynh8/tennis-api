@@ -7,3 +7,5 @@ Can also build and run jar if you want with `./gradlew clean assemble`
 
 ### Run tests
 `./gradlew clean test`
+
+JUnit display names don't work for Gradle yet :(
