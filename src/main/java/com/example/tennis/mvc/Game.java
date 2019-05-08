@@ -40,30 +40,38 @@ public class Game {
                 return "DEUCE!";
             }
             if (points1 == points2 + 1) {
-                return "Advantage, " + player1Info.getName();
+                return createAdvantageText(player1Info.getName());
             }
             if (points2 == points1 + 1) {
-                return "Advantage, " + player2Info.getName();
+                return createAdvantageText(player2Info.getName());
             }
             if (points1 > points2 + 1) {
-                return "Winner, " + player1Info.getName();
+                return createWinnerText(player1Info.getName());
             }
             if (points2 > points1 + 1) {
-                return "Winner, " + player2Info.getName();
+                return createWinnerText(player2Info.getName());
             }
         }
 
         if (points1 > 3) {
-            return "Winner, " + player1Info.getName();
+            return createWinnerText(player1Info.getName());
         }
 
         if (points2 > 3) {
-            return "Winner, " + player2Info.getName();
+            return createWinnerText(player2Info.getName());
         }
 
         String score1 = determineCall(points1);
         String score2 = determineCall(points2);
         return score1 + "-" + score2;
+    }
+
+    private String createWinnerText(String player) {
+        return "Winner, " + player;
+    }
+
+    private String createAdvantageText(String player) {
+        return "Advantage, " + player;
     }
 
     private String determineCall(int points) {
