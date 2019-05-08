@@ -15,4 +15,10 @@ public class TennisControllerAdvice {
     public ErrorMessage resourceNotFound(NoSuchElementException e) {
         return new ErrorMessage(e.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage resourceNotFound(IllegalArgumentException e) {
+        return new ErrorMessage(e.getMessage());
+    }
 }

@@ -271,4 +271,37 @@ class TennisControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(json().node("msg").isEqualTo("Game not found"));
     }
+
+    @DisplayName("Try to score with player of not 1 or 2")
+    @Test
+    void playGame_error2() throws Exception {
+        String player1 = "Venus Williams";
+        String player1RequestJson = "{\"name\":\"" + player1 + "\"}";
+        mockMvc.perform(post("/player")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(player1RequestJson))
+                .andExpect(status().isCreated())
+                .andExpect(json().node("id").isEqualTo(1))
+                .andExpect(json().node("name").isEqualTo(player1));
+
+
+        String player2 = "Serena Williams";
+        String player2RequestJson = "{\"name\":\"" + player2 + "\"}";
+        mockMvc.perform(post("/player")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(player2RequestJson))
+                .andExpect(status().isCreated())
+                .andExpect(json().node("id").isEqualTo(2))
+                .andExpect(json().node("name").isEqualTo(player2));
+
+        String gameRequestJson = "{\"player1\":1,\"player2\":2}";
+        mockMvc.perform(post("/game")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gameRequestJson))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(post("/score/1/3"))
+                .andExpect(status().isBadRequest())
+                .andExpect(json().node("msg").isEqualTo("Game has only player 1 or player 2."));
+    }
 }
